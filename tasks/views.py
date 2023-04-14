@@ -1,7 +1,6 @@
-from django.http import HttpResponseRedirect
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
-from django.views import generic
-
+from django.views import generic, View
 from tasks.models import Task, Tag
 
 
@@ -57,11 +56,9 @@ class TagDeleteView(generic.DeleteView):
     template_name = "tasks/tag_form_confirm_delete.html"
 
 
-def change_task(request, pk):
-    task = Task.objects.get(id=pk)
-    if task.is_done is True:
-        task.is_done = False
-    else:
-        task.is_done = True
-    task.save()
-    return HttpResponseRedirect(reverse_lazy("tasks:TaskListView"))
+class TaskStatusUpdateView(View):
+    def post(self, request, pk):
+        task = Task.objects.get(id=pk)
+        task.is_done = not task.is_done
+        task.save()
+        return redirect("tasks:TaskListView")
