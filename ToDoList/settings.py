@@ -73,6 +73,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "ToDoList.wsgi.application"
 
+CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
